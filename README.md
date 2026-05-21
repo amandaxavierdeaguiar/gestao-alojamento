@@ -58,5 +58,5 @@ npm run dev
 ---
 
 ## 👩‍💻 Autora
-Projeto desenvolvido por **Amanda Xavier de Aguiar** no âmbito do ** CET PROGRAMAÇÃO SIST. INFORMÁTICOS**.
+Projeto desenvolvido por **Amanda Xavier de Aguiar** no âmbito do **CET PROGRAMAÇÃO SIST. INFORMÁTICOS**.
 
