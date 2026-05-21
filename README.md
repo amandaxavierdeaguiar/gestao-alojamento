@@ -34,6 +34,9 @@ Toda a parte visual e interativa está a ser construída em **React**, garantind
 cd frontend
 npm install
 npm run dev
+```
+
+---
 
 ## 🧪 Funcionalidades em Desenvolvimento
 - [ ] Página de clientes  
