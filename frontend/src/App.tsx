@@ -1,7 +1,7 @@
 function App() {
   return (
     <>
-      TESTE!
+      START PROJECT!
     </>
   )
 }
