@@ -1,0 +1,204 @@
+.main-menu {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%; 
+  background-color: var(--bg-color);
+  transition: all 0.3s ease;
+  
+}
+
+.main-menu.collapsed {
+  width: 80px;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  position: relative;
+  height: 100px;
+}
+
+.logo-img {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+}
+
+.company-name h1{
+    font-family: var(--font-family);
+    font-size: 1.14rem;
+    text-transform: uppercase;
+    margin-left: 15px;
+    color: var(--active-bg);
+    transition: opacity 0.2s ease;
+}
+.company-name h3{
+    font-family: var(--font-family);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    margin-left: 15px;
+    color: var(--color-yellow);
+    transition: opacity 0.2s ease;
+}
+
+/* --- ESTILO DO BOTÃO DE EXPANDIR/RECOLHER --- */
+.toggle-menu-btn {
+  position: absolute;
+  right: -15px; 
+  top: 10px; 
+  background: var(--active-bg); 
+  border: none; 
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  color: var(--bg-color);
+  width: 30px;
+  height: 30px;
+  border-radius: 50%; 
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;         
+  font-size: 14px;
+  transition: all 0.3s ease;
+  z-index: 100; 
+}
+
+.toggle-menu-btn:hover {
+  background: var(--active-bg);       
+  transform: scale(1.05);    
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+.main-menu.collapsed .toggle-menu-btn {
+  right: -15px; 
+}
+
+/* Esconder textos no modo colapsado */
+.main-menu.collapsed .company-name,
+.main-menu.collapsed .nav-text {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Lista de Navegação */
+.main-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 40px 0 0 0;
+}
+
+.nav-item {
+  position: relative;
+  width: 100%;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.nav-content {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding-left: 25px;
+  color: var(--text-color);
+  z-index: 10;
+  transition: color 0.3s;
+}
+
+.nav-icon {
+  font-size: 20px;
+  min-width: 30px;
+  color: var(--text-color);
+}
+
+.nav-item.active .nav-icon {
+  color: var(--bg-color) !important; 
+}
+
+.nav-text {
+  margin-left: 15px;
+  font-size: 16px;
+}
+
+/* --- TRUQUE DAS BORDAS INVERTIDAS NO AFTER/BEFORE --- */
+.nav-item.active .nav-content {
+  color: var(--text-active);
+  background-color: var(--active-bg);
+  height: 100%;
+  position: relative;
+}
+
+/* Curva Superior */
+.nav-item.active b:nth-child(1) {
+  position: absolute;
+  top: -20px;
+  height: 20px;
+  width: 100%;
+  background-color: var(--active-bg);
+  display: none;
+}
+.nav-item.active b:nth-child(1)::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--bg-color);
+  border-bottom-right-radius: 20px;
+}
+
+/* Curva Inferior */
+.nav-item.active b:nth-child(2) {
+  position: absolute;
+  bottom: -20px;
+  height: 20px;
+  width: 100%;
+  background-color: var(--active-bg);
+  display: none;
+}
+.nav-item.active b:nth-child(2)::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--bg-color);
+  border-top-right-radius: 20px;
+}
+
+.nav-item.active b:nth-child(1),
+.nav-item.active b:nth-child(2) {
+  display: block;
+}
+
+/* Logout */
+.logout-container-footer {
+  margin-top: auto; 
+  margin-bottom: 10px; 
+  width: 100%;
+}
+
+.logout-action-wrapper {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  position: relative;
+  height: 50px; 
+}
+
+.logout-action-wrapper:hover .nav-text,
+.logout-action-wrapper:hover .logout-icon {
+  color: #ef4444;
+}
