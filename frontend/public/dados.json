@@ -1,0 +1,24 @@
+[
+  {
+    "id": 1,
+    "guestName": "Ana Silva",
+    "room": "Quarto 102 - Vista Mar",
+    "checkInDate": "25 Mai",
+    "checkInTime": "14:00",
+    "checkOutDate": "30 Mai",
+    "checkOutTime": "11:00",
+    "status": "checked-in",
+    "guestsCount": 2
+  },
+  {
+    "id": 2,
+    "guestName": "John Doe",
+    "room": "Estúdio 04",
+    "checkInDate": "25 Mai",
+    "checkInTime": "15:30",
+    "checkOutDate": "28 Mai",
+    "checkOutTime": "10:00",
+    "status": "expected",
+    "guestsCount": 1
+  }
+]
