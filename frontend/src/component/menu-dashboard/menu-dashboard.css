@@ -1,0 +1,91 @@
+.menu-dashboard-container {
+  padding: 1.5rem;
+  font-family: system-ui, -apple-system, sans-serif;
+  color: #1e293b;
+}
+
+/* Grid que se adapta ao espaço disponível */
+.central-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.central-card {
+  display: flex;
+  align-items: center;
+  background-color: #ffffff;
+  padding: 1.5rem;
+  border-radius: 12px;
+  text-decoration: none; 
+  color: inherit;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+  border: 1px solid #e2e8f0;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+}
+
+.central-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  border-color: #cbd5e1;
+}
+
+/* Círculo do Ícone */
+.card-icon-wrapper {
+  width: 56px;
+  height: 56px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 1.5rem;
+  margin-right: 1.2rem;
+  flex-shrink: 0;
+}
+
+/* Informações de Texto */
+.card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex-grow: 1;
+}
+
+.card-info h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0;
+  color: #1e293b;
+}
+
+.card-info p {
+  font-size: 0.875rem;
+  color: #64748b;
+  margin: 0;
+  padding-right: 1.5rem;
+}
+
+/* Métrica/Badge do card */
+.card-badge {
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin-top: 0.5rem;
+  background-color: #f8fafc;
+  padding: 4px 8px;
+  border-radius: 6px;
+  width: fit-content;
+}
+
+/* Setinha */
+.card-arrow {
+  font-size: 1.5rem;
+  color: #94a3b8;
+  transition: transform 0.2s ease;
+}
+
+.central-card:hover .card-arrow {
+  transform: translateX(4px);
+  color: #64748b;
+}
