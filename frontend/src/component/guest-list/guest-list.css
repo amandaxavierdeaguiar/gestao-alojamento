@@ -1,0 +1,99 @@
+.guest-list-section {
+  background: #ffffff;
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.section-header h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+}
+
+.live-indicator {
+  font-size: 0.85rem;
+  color: #10b981;
+  font-weight: 600;
+  animation: pulse 2s infinite;
+}
+
+/* Tabela Base */
+.table-responsive {
+  overflow-x: auto; 
+}
+
+.guest-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.95rem;
+}
+
+.guest-table th {
+  padding: 12px 16px;
+  background-color: #f8fafc;
+  color: #64748b;
+  font-weight: 600;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.guest-table td {
+  padding: 16px;
+  border-bottom: 1px solid #e2e8f0;
+  color: #334155;
+}
+
+.guest-name {
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.guest-room {
+  color: #4f46e5;
+  font-weight: 500;
+}
+
+/* Badges de Status (Cores de Sistema Real) */
+.status-badge {
+  padding: 6px 12px;
+  border-radius: 9999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.status-in {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.status-pending {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.status-out {
+  background-color: #f1f5f9;
+  color: #475569;
+}
+
+/* Linha da tabela ganha destaque ao passar o mouse */
+.guest-table tbody tr:hover {
+  background-color: #f8fafc;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
+}
