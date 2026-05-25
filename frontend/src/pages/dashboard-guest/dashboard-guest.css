@@ -1,0 +1,21 @@
+.dashboard-container {
+  padding: 1.5rem;
+  font-family: system-ui, -apple-system, sans-serif;
+  color: #1e293b;
+}
+
+.dashboard-header {
+  margin-bottom: 2.5rem;
+}
+
+.dashboard-header h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: #0f172a;
+}
+
+.dashboard-header p {
+  color: #64748b;
+  font-size: 1rem;
+}
