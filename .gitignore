@@ -1,0 +1,51 @@
+# BACKEND (Python / FastAPI)
+
+# Ambiente virtual
+backend/venv/
+venv/
+.venv/
+
+# Caches do Python
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+
+# Variáveis de ambiente (Segredos)
+backend/.env
+.env
+.env.local
+
+# Bases de dados locais
+*.sqlite3
+*.db
+
+
+# FRONTEND (Node / Vite / TypeScript)
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
