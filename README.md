@@ -30,12 +30,18 @@ Toda a parte visual e interativa está a ser construída em **React**, garantind
 ---
 
 ## ▶️ Como Executar o Projeto
+**Frontend**
 ```bash
 cd frontend
 npm install
 npm run dev
-```
+```bash
 
+**Backend**
+```bash
+cd backend
+python -m uvicorn app.main:app --reload
+```bash
 ---
 
 ## 🧪 Funcionalidades em Desenvolvimento
