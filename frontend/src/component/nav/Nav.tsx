@@ -3,6 +3,7 @@ import './nav.css';
 import logo from '../../assets/logo/logo-capitao-alojamento.png';
 import * as Icon from 'react-bootstrap-icons';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 interface NavProps {
   isRetracted: boolean;
@@ -10,8 +11,17 @@ interface NavProps {
 }
 
 function Nav({ isRetracted, setIsRetracted }: NavProps) {
-  
   const [activeIndex, setActiveIndex] = useState(0);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    // Limpa o Token e o Utilizador do navegador
+    localStorage.removeItem('@Hotel:token');
+    localStorage.removeItem('@Hotel:user');
+
+    // Redireciona para o ecrã de login
+    navigate('/login', { replace: true });
+  };
 
   const handleToggle = () => {
     setIsRetracted(!isRetracted); // Avisa o componente Pai para mudar o Grid
@@ -19,10 +29,11 @@ function Nav({ isRetracted, setIsRetracted }: NavProps) {
 
   const menuItems = [
     { text: 'Dashboard', icon: <Icon.HouseFill className="nav-icon" />, link: '/'},
-    { text: 'Clientes', icon: <Icon.PeopleFill className="nav-icon" />, link: '/add-guest' },
+    { text: 'Clientes', icon: <Icon.PeopleFill className="nav-icon" />, link: '/clients' },
     { text: 'Reservas', icon: <Icon.CalendarDayFill className="nav-icon" /> , link: '/'},
-    { text: 'Quartos', icon: <Icon.LampFill className="nav-icon" /> , link: '/'},
-    { text: 'Faturas', icon: <Icon.CashCoin className="nav-icon" /> , link: '/'},
+    { text: 'Alojamentos', icon: <Icon.BuildingFill className="nav-icon" /> , link: '/accommodations'},
+    { text: 'Quartos', icon: <Icon.LampFill className="nav-icon" /> , link: '/rooms'},
+    { text: 'Faturas', icon: <Icon.CashCoin className="nav-icon" /> , link: '/invoice'},
   ];
 
   return (
@@ -59,11 +70,8 @@ function Nav({ isRetracted, setIsRetracted }: NavProps) {
         ))}
       </ul>
 
-      {/* <button className="logout-btn" title="Sair do Sistema">
-        <Icon.BoxArrowRight className='logout'/>
-      </button> */}
       <div className="logout-container-footer">
-      <button className="logout-action-wrapper" title="Sair do Sistema">
+      <button className="logout-action-wrapper" title="Sair do Sistema" onClick={handleLogout}>
         <b></b>
         <b></b>
         <div className="nav-content">
