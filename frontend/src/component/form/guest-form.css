@@ -4,7 +4,7 @@
   border-radius: 12px;
   border: 1px solid #e2e8f0;
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
-  max-width: 800px;
+  max-width: 1180px;
   margin: 0 auto;   
   font-family: system-ui, -apple-system, sans-serif;
 }
@@ -28,8 +28,15 @@
 
 .guest-form {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1.5fr));
   gap: 1.2rem;
+}
+
+.date-form{
+  display: grid;
+  grid-template-columns: 2fr 0.5fr 2fr 0.5fr;
+  gap: 1.2rem;
+  padding-top: 1rem;
 }
 
 .form-group {
@@ -41,6 +48,20 @@
 .form-group.full-width {
   grid-column: 1 / -1;
 }
+
+.status{
+  padding-top: 1rem;
+}
+
+.form-group.number {
+  grid-column: 3 / -1;
+}
+
+.form-group.alojamento {
+  grid-column: 1 / -2;
+}
+
+
 
 .form-group label {
   font-size: 0.85rem;
@@ -66,7 +87,8 @@
 }
 
 .submit-btn {
-  grid-column: 1 / -1;
+  /* grid-column: 1 / -1; */
+  width: 100%;
   padding: 13px;
   background-color: #4f46e5;
   color: white;
@@ -77,6 +99,7 @@
   cursor: pointer;
   transition: background-color 0.2s;
   margin-top: 0.8rem;
+  margin-top: 2rem;
 }
 
 .submit-btn:hover {
@@ -87,4 +110,23 @@
 .form-group input[type="time"] {
   font-family: inherit;
   cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .guest-form, 
+  .date-form, .full-width {
+    /* grid-template-columns: 1fr; */
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1.5fr));
+  }
+
+  /* .guest-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1.5fr));
+  gap: 1.2rem;
+} */
+
+  .form-group.alojamento,
+  .form-group.number {
+    grid-column: auto;
+  }
 }
