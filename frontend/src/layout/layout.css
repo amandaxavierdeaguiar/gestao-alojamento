@@ -20,3 +20,10 @@
   overflow-y: auto;
   background-color: #ffffff; 
 }
+
+@media (max-width: 768px) {
+  .layout-container, .layout-collapsed, .layout-expanded {
+    display: flex;
+    flex-direction: column;
+  }
+}
