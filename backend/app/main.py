@@ -8,6 +8,8 @@ from app.models.quarto import QuartoModel
 from app.models.reserva import ReservaModel
 
 from app.routers import alojamento_router
+# importando a rota de autenticação
+from app.auth.auth_router import router as auth_router 
 
 # Cria as tabelas no MySQL
 Base.metadata.create_all(bind=engine)
@@ -25,6 +27,9 @@ app.add_middleware(
 
 # Registra os endpoints criados
 app.include_router(alojamento_router.router)
+# Inclui o router de autenticação que está isolado no módulo auth
+app.include_router(auth_router)
+# app.include_router(hotel_router)
 
 @app.get("/")
 def root():
