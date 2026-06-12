@@ -1,0 +1,105 @@
+.login-container, .register-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    background-color: var(--color-blue-dark);
+    font-family: var(--font-family);
+}
+
+.login-form, .register-form{
+    background-color: var(--active-bg);
+    border-radius: 8px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo-form{
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin-bottom: 2rem;
+}
+
+/* logo header form */
+.logo-img-form {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+}
+
+.company-name-form h1{
+    font-size: 1.14rem;
+    text-transform: uppercase;
+    margin-left: 15px;
+    color: var(--color-blue-dark);
+    transition: opacity 0.2s ease;
+}
+.company-name-form h3{
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    margin-left: 15px;
+    color: var(--color-yellow);
+    transition: opacity 0.2s ease;
+}
+
+/* form */
+
+.password-input, .username-input, .email-input, .name-input{
+    background-color: var(--color-blue-dark);
+    color: var(--active-bg);
+    border-radius: 10px;
+    padding: 0.2rem;
+    margin-bottom: 1rem;
+    font-family: var(--font-family);
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.password-icon, .username-icon, .email-icon, .name-icon{
+    color: var(--active-bg);
+    font-size: 1.5rem;
+    margin-right: 0.2rem;
+}
+
+.select{
+    margin-bottom: 1rem;
+}
+
+#username, #password{
+    width: 100%;
+    border: none;
+    color: var(--color-blue-dark);
+    font-size: 1rem;
+    font-family: var(--font-family);
+}
+
+.submit-login{
+    background-color: var(--color-blue-dark);
+    width: 100%;
+    color: var(--active-bg);
+    border: none;
+    border-radius: 6px;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-bottom: 1rem;
+    font-family: var(--font-family);
+}
+
+/* registrar */
+.account-create p{
+    margin-top: 1rem;
+    font-size: 0.8rem;
+    text-align: center;
+}
+
+/* Register */
+
