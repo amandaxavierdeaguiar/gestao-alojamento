@@ -11,12 +11,19 @@ from app.models.reserva import ReservaModel
 from app.schemas.alojamento_schema import AlojamentoCreate, AlojamentoResponse
 from app.schemas.quarto_schema import QuartoCreate, QuartoResponse
 from app.schemas.cliente_schema import ClienteCreate, ClienteResponse
-from app.schemas.reserva_schema import ReservaCreate, ReservaResponse
+from app.schemas.reserva_schema import ReservaCreate, ReservaResponse, ReservaUpdate
+
+from datetime import datetime
+
+from sqlalchemy.orm import joinedload
+
+# Para verificar se o utilizador logado é admin
+from app.auth.security import verificar_admin
 
 router = APIRouter(tags=["Gestão de Hotelaria"])
 
 # ==========================================
-# 1. ALOJAMENTO
+# ALOJAMENTO
 # ==========================================
 @router.post("/alojamentos", response_model=AlojamentoResponse, status_code=status.HTTP_201_CREATED)
 def criar_alojamento(payload: AlojamentoCreate, db: Session = Depends(get_db)):
@@ -42,8 +49,36 @@ def obter_alojamento_por_id(alojamento_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Alojamento não encontrado.")
     return alojamento
 
+@router.put("/alojamentos/{alojamento_id}", status_code=status.HTTP_200_OK)
+def atualizar_alojamento(
+    alojamento_id: int, 
+    payload: AlojamentoCreate, # Reutiliza a validação de campos existentes
+    db: Session = Depends(get_db),
+    usuario_logado: dict = Depends(verificar_admin) # Proteção administrativa ativa
+):
+    alojamento = db.query(AlojamentoModel).filter(AlojamentoModel.id == alojamento_id).first()
+    if not alojamento:
+        raise HTTPException(status_code=404, detail="Alojamento não encontrado.")
+
+    dados_atualizados = payload.model_dump(exclude_unset=True)
+    for chave, valor in dados_atualizados.items():
+        setattr(alojamento, chave, valor)
+
+    db.commit()
+    db.refresh(alojamento)
+    return {"message": "Alojamento atualizado com sucesso!", "alojamento": alojamento}
+
+@router.delete("/alojamentos/{alojamento_id}", status_code=status.HTTP_200_OK)
+def deletar_alojamento(alojamento_id: int, db: Session = Depends(get_db), usuario_logado: dict = Depends(verificar_admin)):
+    alojamento = db.query(AlojamentoModel).filter(AlojamentoModel.id == alojamento_id).first()
+    if not alojamento:
+        raise HTTPException(status_code=404, detail="Alojamento nao encontrado.")
+    db.delete(alojamento)
+    db.commit()
+    return {"message": "Alojamento deletado com sucesso!"}
+
 # ==========================================
-# 2. CLIENTE
+# CLIENTE
 # ==========================================
 @router.post("/clientes", response_model=ClienteResponse, status_code=status.HTTP_201_CREATED)
 def criar_cliente(payload: ClienteCreate, db: Session = Depends(get_db)):
@@ -69,8 +104,34 @@ def obter_cliente_por_id(cliente_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Cliente não encontrado.")
     return cliente
 
+@router.put("/clientes/{cliente_id}", status_code=status.HTTP_200_OK)
+def atualizar_cliente(
+    cliente_id: int, 
+    payload: ClienteCreate,
+    db: Session = Depends(get_db)
+):
+    cliente = db.query(ClienteModel).filter(ClienteModel.id == cliente_id).first()
+    if not cliente:
+        raise HTTPException(status_code=404, detail="Cliente não encontrado.")
+
+    dados_atualizados = payload.model_dump(exclude_unset=True)
+    for chave, valor in dados_atualizados.items():
+        setattr(cliente, chave, valor)
+
+    db.commit()
+    db.refresh(cliente)
+    return {"message": "Cliente atualizado com sucesso!", "cliente": cliente}
+
+@router.delete("/clientes/{cliente_id}", status_code=status.HTTP_200_OK)
+def deletar_cliente(cliente_id: int, db: Session = Depends(get_db)):
+    cliente = db.query(ClienteModel).filter(ClienteModel.id == cliente_id).first()
+    if not cliente:
+        raise HTTPException(status_code=404, detail="Cliente nao encontrado.")
+    db.delete(cliente)
+    db.commit()
+    return {"message": "Cliente deletado com sucesso!"}
 # ==========================================
-# 3. QUARTO
+# QUARTO
 # ==========================================
 @router.post("/quartos", response_model=QuartoResponse, status_code=status.HTTP_201_CREATED)
 def criar_quarto(payload: QuartoCreate, db: Session = Depends(get_db)):
@@ -103,8 +164,46 @@ def obter_quarto_por_id(quarto_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Quarto não encontrado.")
     return quarto
 
+@router.put("/quartos/{quarto_id}", status_code=status.HTTP_200_OK)
+def atualizar_quarto(
+    quarto_id: int, 
+    payload: QuartoCreate, 
+    db: Session = Depends(get_db),
+    usuario_logado: dict = Depends(verificar_admin) # Proteção administrativa ativa
+):
+    # Procura o quarto
+    quarto = db.query(QuartoModel).filter(QuartoModel.id == quarto_id).first()
+    if not quarto:
+        raise HTTPException(status_code=404, detail="Quarto não encontrado.")
+
+    # Valida se o novo alojamento_id indicado existe
+    alojamento = db.query(AlojamentoModel).filter(AlojamentoModel.id == payload.alojamento_id).first()
+    if not alojamento:
+        raise HTTPException(
+            status_code=404, 
+            detail=f"Não é possível atualizar o quarto. O Alojamento com ID {payload.alojamento_id} não existe."
+        )
+
+    # Atualiza os dados dinamicamente
+    dados_atualizados = payload.model_dump(exclude_unset=True)
+    for chave, valor in dados_atualizados.items():
+        setattr(quarto, chave, valor)
+
+    db.commit()
+    db.refresh(quarto)
+    return {"message": "Quarto atualizado com sucesso!", "quarto": quarto}
+
+@router.delete("/quartos/{quarto_id}", status_code=status.HTTP_200_OK)
+def deletar_quarto(quarto_id: int, db: Session = Depends(get_db)):
+    quarto = db.query(QuartoModel).filter(QuartoModel.id == quarto_id).first()
+    if not quarto:
+        raise HTTPException(status_code=404, detail="Quarto nao encontrado.")
+    db.delete(quarto)
+    db.commit()
+    return {"message": "Quarto deletado com sucesso!"}
+
 # ==========================================
-# 4. RESERVA
+# RESERVA
 # ==========================================
 @router.post("/reservas", response_model=ReservaResponse, status_code=status.HTTP_201_CREATED)
 def criar_reserva(payload: ReservaCreate, db: Session = Depends(get_db)):
@@ -116,8 +215,21 @@ def criar_reserva(payload: ReservaCreate, db: Session = Depends(get_db)):
     if len(quartos) != len(payload.quarto_ids):
         raise HTTPException(status_code=404, detail="Um ou mais IDs de quartos não existem.")
 
+    # --- CÁLCULO DAS DIÁRIAS ---
+    try:
+        # Garante a conversão de str para date se necessário
+        d_inicio = payload.data_inicio if isinstance(payload.data_inicio, datetime) else datetime.strptime(str(payload.data_inicio), "%Y-%m-%d")
+        d_fim = payload.data_fim if isinstance(payload.data_fim, datetime) else datetime.strptime(str(payload.data_fim), "%Y-%m-%d")
+        
+        dias = (d_fim - d_inicio).days
+        if dias <= 0:
+            dias = 1  # Evita diárias zeradas ou negativas
+    except Exception:
+        dias = 1
+
     soma_precos_quartos = sum([quarto.preco for quarto in quartos])
-    preco_final_calculado = soma_precos_quartos + (payload.cama_extra or 0.0)
+    # Multiplica o valor dos quartos pelos dias e soma a cama extra uma única vez (ou multiplique a cama extra por dia se preferir)
+    preco_final_calculado = (soma_precos_quartos * dias) + (payload.cama_extra or 0.0)
 
     nova_reserva = ReservaModel(
         data_inicio=payload.data_inicio,
@@ -142,7 +254,10 @@ def criar_reserva(payload: ReservaCreate, db: Session = Depends(get_db)):
 
 @router.get("/reservas", response_model=List[ReservaResponse])
 def listar_reservas(db: Session = Depends(get_db)):
-    return db.query(ReservaModel).all()
+    return db.query(ReservaModel).options(
+        joinedload(ReservaModel.cliente),
+        joinedload(ReservaModel.quartos)
+    ).all()
 
 @router.get("/reservas/{reserva_id}", response_model=ReservaResponse)
 def obter_reserva_por_id(reserva_id: int, db: Session = Depends(get_db)):
@@ -150,3 +265,67 @@ def obter_reserva_por_id(reserva_id: int, db: Session = Depends(get_db)):
     if not reserva:
         raise HTTPException(status_code=404, detail="Reserva não encontrada.")
     return reserva
+
+@router.delete("/reservas/{reserva_id}", status_code=status.HTTP_204_NO_CONTENT)
+def deletar_reserva(
+    reserva_id: int, 
+    db: Session = Depends(get_db),
+    usuario_logado: dict = Depends(verificar_admin)
+):
+    delete_reserva = db.query(ReservaModel).filter(ReservaModel.id == reserva_id).first()
+    if not delete_reserva:
+        raise HTTPException(status_code=404, detail="Reserva nao encontrada.")
+    db.delete(delete_reserva)
+    db.commit()
+    return None
+
+@router.put("/reservas/{reserva_id}", status_code=status.HTTP_200_OK)
+def atualizar_reserva(
+    reserva_id: int, 
+    payload: ReservaUpdate, 
+    db: Session = Depends(get_db),
+    usuario_logado: dict = Depends(verificar_admin)
+):
+    reserva = db.query(ReservaModel).filter(ReservaModel.id == reserva_id).first()
+    if not reserva:
+        raise HTTPException(status_code=404, detail="Reserva não encontrada.")
+
+    # Verifica se houve alteração de datas para recalcular dias
+    data_ini = payload.data_inicio or reserva.data_inicio
+    data_fim = payload.data_fim or reserva.data_fim
+    try:
+        d_inicio = data_ini if isinstance(data_ini, datetime) else datetime.strptime(str(data_ini), "%Y-%m-%d")
+        d_fim = data_fim if isinstance(data_fim, datetime) else datetime.strptime(str(data_fim), "%Y-%m-%d")
+        dias = (d_fim - d_inicio).days
+        if dias <= 0:
+            dias = 1
+    except Exception:
+        dias = 1
+
+    # Intercepta e processa a troca de quartos
+    if payload.quarto_ids is not None:
+        novos_quartos = db.query(QuartoModel).filter(QuartoModel.id.in_(payload.quarto_ids)).all()
+        if len(novos_quartos) != len(payload.quarto_ids):
+            raise HTTPException(status_code=404, detail="Um ou mais IDs de quartos não existem.")
+        
+        db.query(QuartoModel).filter(QuartoModel.reserva_id == reserva.id).update({QuartoModel.reserva_id: None})
+        
+        for q in novos_quartos:
+            q.reserva_id = reserva.id
+            
+        soma_precos = sum([q.preco for q in novos_quartos])
+        cama = payload.cama_extra if payload.cama_extra is not None else (reserva.cama_extra or 0.0)
+        reserva.preco_total = (soma_precos * dias) + cama
+    else:
+        quartos_atuais = db.query(QuartoModel).filter(QuartoModel.reserva_id == reserva.id).all()
+        soma_precos = sum([q.preco for q in quartos_atuais])
+        cama = payload.cama_extra if payload.cama_extra is not None else (reserva.cama_extra or 0.0)
+        reserva.preco_total = (soma_precos * dias) + cama
+
+    dados_atualizados = payload.model_dump(exclude_unset=True, exclude={"quarto_ids"})
+    for chave, valor in dados_atualizados.items():
+        setattr(reserva, chave, valor)
+
+    db.commit()
+    db.refresh(reserva)
+    return {"message": "Reserva updated successfully!", "reserva": reserva}
