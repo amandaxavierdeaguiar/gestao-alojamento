@@ -16,5 +16,5 @@ class ReservaModel(Base):
     
     cliente_id = Column(Integer, ForeignKey("cliente.id"))
     
-    cliente = relationship("ClienteModel", back_populates="reservas")
-    quartos = relationship("QuartoModel", back_populates="reserva")
+    cliente = relationship("ClienteModel", back_populates="reservas", lazy="joined")
+    quartos = relationship("QuartoModel", back_populates="reserva", lazy="joined")

@@ -12,6 +12,12 @@ class ReservaCreate(BaseModel):
     status: str = "expected"
     cliente_id: int
     quarto_ids: List[int] # Lista de IDs dos quartos que quer reservar
+    
+    cliente: Optional[ClienteResponse] = None
+    quartos: List[QuartoResponse] = []
+    
+    class Config:
+        from_attributes = True
 
 class ReservaResponse(BaseModel):
     id: int
@@ -22,11 +28,25 @@ class ReservaResponse(BaseModel):
     preco_total: float
     cama_extra: Optional[float]
     status: str    
-    cliente_id: int
     
-    # Anexa os dados completos do Cliente e dos Quartos puxados do MySQL
+    cliente_id: Optional[int] = None
+    
     cliente: Optional[ClienteResponse] = None
     quartos: List[QuartoResponse] = []
+
+    class Config:
+        from_attributes = True
+        
+class ReservaUpdate(BaseModel):
+    data_inicio: Optional[str] = None
+    hora_checkin: Optional[str] = None
+    data_fim: Optional[str] = None
+    hora_checkout: Optional[str] = None
+    cama_extra: Optional[float] = None
+    status: Optional[str] = None
+    cliente_id: Optional[int] = None
+    
+    quarto_ids: Optional[List[int]] = None 
 
     class Config:
         from_attributes = True
