@@ -6,36 +6,28 @@ export default function Dashboard() {
   
   const centralItems = [
     {
-      title: 'Clientes',
-      description: 'Gerenciar hóspedes e cadastros',
+      title: 'Criar novo User',
       icon: <Icon.PeopleFill />,
-      path: '/clientes',
+      path: '/register',
       color: '#4f46e5',
-    //   count: '124'     
     },
     {
-      title: 'Reservas',
-      description: 'Check-ins, check-outs e calendário',
+      title: 'Criar nova Reserva',
       icon: <Icon.CalendarDayFill />,
-      path: '/reservas',
+      path: '/add-guest',
       color: '#06b6d4', 
-    //   count: '12 Hoje'
     },
     {
-      title: 'Quartos',
-      description: 'Status de ocupação e limpeza',
-      icon: <Icon.LampFill />,
-      path: '/quartos',
+      title: 'Criar novo Alojamento',
+      icon: <Icon.BuildingFill />,
+      path: '/add-accommodation',
       color: '#10b981', 
-    //   count: '85% Ocupado'
     },
     {
-      title: 'Faturas',
-      description: 'Fluxo de caixa e faturamento',
-      icon: <Icon.CashCoin />,
-      path: '/faturas',
+      title: 'Criar novo Quarto',
+      icon: <Icon.LampFill />,
+      path: '/add-room',
       color: '#f59e0b',
-    //   count: '€ 3.420,00'
     }
   ];
 
@@ -50,10 +42,6 @@ export default function Dashboard() {
             </div>
             <div className="card-info">
               <h2>{item.title}</h2>
-              <p>{item.description}</p>
-              {/* <span className="card-badge" style={{ color: item.color }}>
-                {item.count}
-              </span> */}
             </div>
             <div className="card-arrow">
               <Icon.ArrowRightShort />
